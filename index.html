@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerCatalyst - Job Search Management Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header__content">
+                <h1 class="header__title">CareerCatalyst</h1>
+                <p class="header__subtitle">Your Unified Job Search Management Platform</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav__container">
+                <button class="nav__item nav__item--active" data-section="dashboard">
+                    <span class="nav__icon">📊</span>
+                    Dashboard
+                </button>
+                <button class="nav__item" data-section="profile">
+                    <span class="nav__icon">👤</span>
+                    Profile
+                </button>
+                <button class="nav__item" data-section="applications">
+                    <span class="nav__icon">📋</span>
+                    Applications
+                </button>
+                <button class="nav__item" data-section="resume">
+                    <span class="nav__icon">📄</span>
+                    Resume Builder
+                </button>
+                <button class="nav__item" data-section="inbox">
+                    <span class="nav__icon">📧</span>
+                    Inbox
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Dashboard Section -->
+            <section class="section section--active" id="dashboard">
+                <div class="container">
+                    <h2 class="section__title">Dashboard Overview</h2>
+                    
+                    <!-- Stats Cards -->
+                    <div class="stats">
+                        <div class="stats__card">
+                            <div class="stats__number">15</div>
+                            <div class="stats__label">Total Applications</div>
+                        </div>
+                        <div class="stats__card">
+                            <div class="stats__number">8</div>
+                            <div class="stats__label">Pending</div>
+                        </div>
+                        <div class="stats__card">
+                            <div class="stats__number">2</div>
+                            <div class="stats__label">Interviews</div>
+                        </div>
+                        <div class="stats__card">
+                            <div class="stats__number">1</div>
+                            <div class="stats__label">Offers</div>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="charts">
+                        <div class="chart">
+                            <h3>Application Status</h3>
+                            <canvas id="statusChart"></canvas>
+                        </div>
+                        <div class="chart">
+                            <h3>Applications This Month</h3>
+                            <canvas id="monthlyChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Recent Applications -->
+                    <div class="recent">
+                        <h3>Recent Applications</h3>
+                        <div class="application-list">
+                            <div class="application-item">
+                                <div class="company">TCS</div>
+                                <div class="position">Data Analyst</div>
+                                <div class="status status--applied">Applied</div>
+                                <div class="date">Oct 1, 2024</div>
+                            </div>
+                            <div class="application-item">
+                                <div class="company">Wipro</div>
+                                <div class="position">MIS Executive</div>
+                                <div class="status status--review">Under Review</div>
+                                <div class="date">Sep 28, 2024</div>
+                            </div>
+                            <div class="application-item">
+                                <div class="company">Infosys</div>
+                                <div class="position">Data Entry Specialist</div>
+                                <div class="status status--interview">Interview Scheduled</div>
+                                <div class="date">Sep 25, 2024</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section class="section" id="profile">
+                <div class="container">
+                    <h2 class="section__title">Profile Management</h2>
+                    
+                    <form class="profile-form">
+                        <div class="form-group">
+                            <h3>Personal Information</h3>
+                            <div class="form-row">
+                                <input type="text" placeholder="Full Name" value="Sample User">
+                                <input type="email" placeholder="Email" value="user@example.com">
+                            </div>
+                            <div class="form-row">
+                                <input type="tel" placeholder="Phone" value="+91-9999999999">
+                                <input type="text" placeholder="Location" value="Gurgaon, Haryana">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <h3>Professional Summary</h3>
+                            <textarea placeholder="Write your professional summary...">Experienced data entry operator with advanced Excel skills and 3+ years of corporate experience seeking new opportunities in data management and analysis.</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <h3>Skills</h3>
+                            <div class="skills-input">
+                                <input type="text" placeholder="Add a skill and press Enter" id="skillInput">
+                                <div class="skills-list">
+                                    <span class="skill-tag">Advanced Excel</span>
+                                    <span class="skill-tag">Data Entry</span>
+                                    <span class="skill-tag">Data Analysis</span>
+                                    <span class="skill-tag">Microsoft Office</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn--primary">Save Profile</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Applications Section -->
+            <section class="section" id="applications">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section__title">Job Applications</h2>
+                        <button class="btn btn--primary" id="addApplicationBtn">Add New Application</button>
+                    </div>
+                    
+                    <div class="applications-filters">
+                        <select class="filter-select">
+                            <option>All Status</option>
+                            <option>Applied</option>
+                            <option>Under Review</option>
+                            <option>Interview Scheduled</option>
+                            <option>Rejected</option>
+                            <option>Offered</option>
+                        </select>
+                        <input type="text" placeholder="Search companies..." class="search-input">
+                    </div>
+
+                    <div class="applications-grid">
+                        <div class="application-card">
+                            <div class="card-header">
+                                <h3>TCS</h3>
+                                <span class="status status--applied">Applied</span>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Position:</strong> Data Analyst</p>
+                                <p><strong>Location:</strong> Gurgaon</p>
+                                <p><strong>Salary:</strong> 4-6 LPA</p>
+                                <p><strong>Applied:</strong> Oct 1, 2024</p>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn btn--secondary">View Details</button>
+                                <button class="btn btn--outline">Follow Up</button>
+                            </div>
+                        </div>
+
+                        <div class="application-card">
+                            <div class="card-header">
+                                <h3>Wipro</h3>
+                                <span class="status status--review">Under Review</span>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Position:</strong> MIS Executive</p>
+                                <p><strong>Location:</strong> Noida</p>
+                                <p><strong>Salary:</strong> 3.5-5 LPA</p>
+                                <p><strong>Applied:</strong> Sep 28, 2024</p>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn btn--secondary">View Details</button>
+                                <button class="btn btn--outline">Follow Up</button>
+                            </div>
+                        </div>
+
+                        <div class="application-card">
+                            <div class="card-header">
+                                <h3>Infosys</h3>
+                                <span class="status status--interview">Interview Scheduled</span>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Position:</strong> Data Entry Specialist</p>
+                                <p><strong>Location:</strong> Gurgaon</p>
+                                <p><strong>Salary:</strong> 3-4.5 LPA</p>
+                                <p><strong>Applied:</strong> Sep 25, 2024</p>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn btn--secondary">View Details</button>
+                                <button class="btn btn--primary">Interview Prep</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resume Builder Section -->
+            <section class="section" id="resume">
+                <div class="container">
+                    <h2 class="section__title">Resume Builder</h2>
+                    
+                    <div class="resume-builder">
+                        <div class="resume-templates">
+                            <h3>Choose Template</h3>
+                            <div class="templates-grid">
+                                <div class="template template--active">
+                                    <div class="template-preview">Professional</div>
+                                </div>
+                                <div class="template">
+                                    <div class="template-preview">Modern</div>
+                                </div>
+                                <div class="template">
+                                    <div class="template-preview">Creative</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="resume-editor">
+                            <div class="editor-toolbar">
+                                <button class="btn btn--secondary">Preview</button>
+                                <button class="btn btn--primary">Download PDF</button>
+                            </div>
+                            
+                            <div class="resume-preview">
+                                <div class="resume-content">
+                                    <h2>Sample User</h2>
+                                    <p>user@example.com | +91-9999999999 | Gurgaon, Haryana</p>
+                                    
+                                    <h3>Professional Summary</h3>
+                                    <p>Experienced data entry operator with advanced Excel skills and 3+ years of corporate experience.</p>
+                                    
+                                    <h3>Skills</h3>
+                                    <p>Advanced Excel, Data Entry, Data Analysis, Microsoft Office</p>
+                                    
+                                    <h3>Experience</h3>
+                                    <div class="experience-item">
+                                        <h4>Data Entry Operator - Previous Company</h4>
+                                        <p>2021 - 2024</p>
+                                        <p>Managed large datasets and performed data validation using advanced Excel functions.</p>
+                                    </div>
+                                    
+                                    <h3>Education</h3>
+                                    <div class="education-item">
+                                        <h4>BCA (In Progress) - IGNOU</h4>
+                                        <p>Expected 2025</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inbox Section -->
+            <section class="section" id="inbox">
+                <div class="container">
+                    <h2 class="section__title">Communication Inbox</h2>
+                    
+                    <div class="inbox-layout">
+                        <div class="inbox-sidebar">
+                            <div class="inbox-folders">
+                                <div class="folder folder--active">All Messages</div>
+                                <div class="folder">Interview Invites</div>
+                                <div class="folder">Follow-ups</div>
+                                <div class="folder">Rejections</div>
+                                <div class="folder">Offers</div>
+                            </div>
+                        </div>
+                        
+                        <div class="inbox-main">
+                            <div class="message-list">
+                                <div class="message-item">
+                                    <div class="message-sender">TCS Recruitment</div>
+                                    <div class="message-subject">Application Received - Data Analyst Position</div>
+                                    <div class="message-preview">Thank you for your application. We have received your resume...</div>
+                                    <div class="message-date">Oct 1, 2024</div>
+                                </div>
+                                
+                                <div class="message-item message--unread">
+                                    <div class="message-sender">Infosys HR</div>
+                                    <div class="message-subject">Interview Scheduled - Data Entry Specialist</div>
+                                    <div class="message-preview">Congratulations! We would like to schedule an interview...</div>
+                                    <div class="message-date">Oct 3, 2024</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Add Application Modal -->
+        <div class="modal" id="addApplicationModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Job Application</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form class="application-form">
+                        <div class="form-row">
+                            <input type="text" placeholder="Company Name" required>
+                            <input type="text" placeholder="Position" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="text" placeholder="Location">
+                            <input type="text" placeholder="Salary Range">
+                        </div>
+                        <div class="form-row">
+                            <select required>
+                                <option value="">Application Status</option>
+                                <option value="applied">Applied</option>
+                                <option value="under-review">Under Review</option>
+                                <option value="interview">Interview Scheduled</option>
+                                <option value="rejected">Rejected</option>
+                                <option value="offered">Offered</option>
+                            </select>
+                            <input type="date" required>
+                        </div>
+                        <textarea placeholder="Notes (optional)"></textarea>
+                        <div class="modal-actions">
+                            <button type="button" class="btn btn--secondary" id="cancelBtn">Cancel</button>
+                            <button type="submit" class="btn btn--primary">Add Application</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
